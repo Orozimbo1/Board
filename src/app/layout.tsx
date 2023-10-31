@@ -1,10 +1,13 @@
+// Styles
+import './styles/global.scss'
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Board | Organizando tarefas.',
+  title: 'Board | Organizando tarefas',
   description: 'Gerenciador de tarefas',
 }
 
