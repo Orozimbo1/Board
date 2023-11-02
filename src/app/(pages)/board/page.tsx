@@ -4,6 +4,9 @@ import styles from './styles.module.scss'
 // Icons
 import { FiCalendar, FiClock, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi'
 
+// Components
+import { SupportButton } from '@/app/components/SupportButton'
+
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -59,6 +62,8 @@ export const Board = () => {
           </time>
         </div>
       </div>
+
+      <SupportButton />
     </>
   )
 }

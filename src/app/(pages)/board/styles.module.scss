@@ -27,11 +27,11 @@
       border: 0;
       background-color: #FFB800;
       border-radius: 6px;
-      transition: .3s;
+      transition: all .3s;
     }
 
     button:hover {
-      filter: contrast(200%);
+      filter: brightness(0.8);
     }
   }
 
