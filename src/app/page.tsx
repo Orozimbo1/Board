@@ -1,6 +1,13 @@
 // Styles
 import styles from './styles/page.module.scss'
 
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Board | Organizando tarefas',
+  description: 'Gerenciador de tarefas',
+}
+
 export default function Home() {
   return (
     <main className={styles.contentContainer}>
