@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description: 'Gerenciador de tarefas',
 }
 
+
 export default function Home() {
   return (
     <main className={styles.contentContainer}>
