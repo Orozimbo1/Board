@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 // Styles
 import styles from './styles.module.scss'
 
@@ -7,14 +10,26 @@ import { FiCalendar, FiClock, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi'
 // Components
 import { SupportButton } from '@/app/components/SupportButton'
 
+// Next
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
+
+// Next Auth
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]/route'
 
 export const metadata: Metadata = {
   title: 'Board | Minhas tarefas',
   description: 'Crie suas tarefas.',
 }
 
-export const Board = () => {
+const Board = async () => {
+  const session = await getServerSession(authOptions)
+
+  if(!session?.id) {
+    redirect('/')
+  }
+  
   return (
     <>
       <main className={styles.container}>
@@ -68,4 +83,33 @@ export const Board = () => {
   )
 }
 
-export default Board
+export default Board;
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const session = getSession()
+
+//    return {
+//     props: {
+
+//     }
+//    }
+// }
+
+// type Repo = {
+//   name: string
+//   stargazers_count: number
+// }
+ 
+// export const getServerSideProps = (async (context) => {
+//   const res = await fetch('https://api.github.com/repos/vercel/next.js')
+//   const repo = await res.json()
+//   return { props: { repo } }
+// }) satisfies GetServerSideProps<{
+//   repo: Repo
+// }>
+ 
+// export default function Page({
+//   repo,
+// }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+//   return repo.stargazers_count
+// }
