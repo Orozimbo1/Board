@@ -9,16 +9,17 @@ import { FiCalendar, FiClock, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi'
 
 // Components
 import { SupportButton } from '@/app/components/SupportButton'
+import { FormTask } from '@/app/components/FormTask'
 
 // Next
-import { Metadata } from 'next'
+// import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 // Next Auth
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Board | Minhas tarefas',
   description: 'Crie suas tarefas.',
 }
@@ -29,19 +30,27 @@ const Board = async () => {
   if(!session?.id) {
     redirect('/')
   }
+
+  const user = {
+    nome: session?.user.name,
+    id: session?.id
+  }
   
   return (
     <>
       <main className={styles.container}>
-        <form>
+        {/* <form onSubmit={handleSubmit}>
           <input 
             type="text" 
-            placeholder='Digite sua tarefa..'  
+            placeholder='Digite sua tarefa..' 
+            value={input}
+            onChange={(e) => setInput(e.target.value)} 
           />
           <button type='submit'>
             <FiPlus size={25} color="#17181F" />
           </button>
-        </form>
+        </form> */}
+        <FormTask user={user} />
 
         <h1>Você tem 3 tarefas!</h1>
 

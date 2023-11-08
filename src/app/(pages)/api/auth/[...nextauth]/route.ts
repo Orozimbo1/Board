@@ -18,10 +18,8 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
-        console.log('passou login')
         return true
       } catch (error) {
-        console.log('Deu ruim login')
         console.log('DEU ERRO ', error)
         return false
       }
@@ -33,7 +31,6 @@ export const authOptions = {
           id: token.sub 
         }
       } catch (error) {
-        console.log('Deu ruim session')
         return {
           ...session,
           id: null
