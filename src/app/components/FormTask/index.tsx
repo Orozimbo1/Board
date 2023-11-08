@@ -12,7 +12,7 @@ import { FiCalendar, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi'
 
 // Firebase
 import { db, app } from '@/app/services/firebaseConnection';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, getDoc } from "firebase/firestore";
 
 // Date Fns
 import { format } from 'date-fns';
@@ -76,6 +76,12 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
     })
   }
 
+  const handleDelete = async (id: string) => {
+    setTaskList([...taskList.filter(el => el.id != id)])
+
+    await deleteDoc(doc(db, 'tarefas', id))
+  }
+
   return (
     <main className={styles.container}>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
@@ -89,7 +95,7 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
           <FiPlus size={25} color="#17181F" />
         </button>
       </form> 
-      <h1>Você tem {taskList.length} tarefas!</h1>
+      <h1>Você tem {taskList.length} {taskList.length === 1 ? 'Tarefa' : 'Tarefas'}!</h1>
       <section>
         {taskList.map((task) => (
           <article className={styles.taskList} key={task.id}>
@@ -107,7 +113,7 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
                   <span>Editar</span> 
                 </button>
               </div>
-                <button>
+                <button onClick={() => handleDelete(task.id)}>
                   <FiTrash size={20} color="#FF3636" />
                   <span>Excluir</span>
                 </button>
