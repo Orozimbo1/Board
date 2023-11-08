@@ -20,23 +20,27 @@ import { format } from 'date-fns';
 // Next
 import Link from 'next/link';
 
+type TaskList = {
+  id: string;
+  createdAt: string | Date;
+  createdFormated?: string;
+  tarefa: string;
+  userId: string;
+  nome: string;
+}
+
 interface BoardProps{
   user: {
     id: string,
     nome: string
   },
-  tasks: {
-    createdAt: string,
-    tarefa: string,
-    userId: string,
-    nome: string,
-  }
+  tasks: string
 }
 
 export const FormTask = ({ user, tasks }: BoardProps) => {
 
   const [input, setInput] = useState('')
-  const [taskList, setTaskList] = useState(tasks)
+  const [taskList, setTaskList] = useState<TaskList[]>(JSON.parse(tasks))
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -66,7 +70,6 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
       }
 
       setTaskList([...taskList, data])
-      // console.log(taskList)
       setInput('')
     }).catch((err) => {
       console.log('DEU ERRO', err)

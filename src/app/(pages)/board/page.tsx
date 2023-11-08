@@ -5,7 +5,7 @@
 import styles from './styles.module.scss'
 
 // Icons
-import { FiCalendar, FiClock, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi'
+import { FiClock } from 'react-icons/fi'
 
 // Components
 import { SupportButton } from '@/app/components/SupportButton'
@@ -22,6 +22,9 @@ import { authOptions } from '../api/auth/[...nextauth]/route'
 // Firebase
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { db } from '@/app/services/firebaseConnection'
+
+// Date fns
+import { format } from 'date-fns'
 
 export const metadata = {
   title: 'Board | Minhas tarefas',
@@ -42,16 +45,18 @@ const Board = async () => {
 
   const tasksRef = collection(db, 'tarefas')
 
-  let tasks: any[] = [];
   let q;
-
-  q = query(tasksRef, where('userId', '==', user.id), orderBy('createdAt', 'desc')) 
+  q = query(tasksRef, where('userId', '==', user.id), orderBy('createdAt', 'asc')) 
   
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    tasks.push({ id: doc.id, ...doc.data() })
-  });
+
+  const tasks = JSON.stringify(querySnapshot.docs.map((doc) => {
+    return { 
+      id: doc.id,
+      createdFormated: format(doc.data().createdAt.toDate(), 'dd MMMM yyyy'),
+      ...doc.data() 
+    }
+  }));
   
   return (
     <>
@@ -72,32 +77,3 @@ const Board = async () => {
 }
 
 export default Board;
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const session = getSession()
-
-//    return {
-//     props: {
-
-//     }
-//    }
-// }
-
-// type Repo = {
-//   name: string
-//   stargazers_count: number
-// }
- 
-// export const getServerSideProps = (async (context) => {
-//   const res = await fetch('https://api.github.com/repos/vercel/next.js')
-//   const repo = await res.json()
-//   return { props: { repo } }
-// }) satisfies GetServerSideProps<{
-//   repo: Repo
-// }>
- 
-// export default function Page({
-//   repo,
-// }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-//   return repo.stargazers_count
-// }
