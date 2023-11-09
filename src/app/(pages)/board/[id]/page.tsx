@@ -1,7 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
 // Styles
-import styles from './Task.module.scss'
+import styles from './styles.module.scss'
 
 // Next Auth
 import { getServerSession } from "next-auth"

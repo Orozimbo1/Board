@@ -2,7 +2,7 @@
 // @ts-nocheck
 "use client"
 // Styles
-import styles from './FormTask.module.scss'
+import styles from './styles.module.scss'
 
 // Hooks
 import React, { FormEvent, useState } from 'react'
