@@ -11,6 +11,20 @@
   }
 }
 
+.warnText {
+  color: #FFB800;
+  display: flex;
+  gap: .8rem;
+  padding: .4rem 0;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.1rem;
+
+  button {
+    background-color: transparent;
+    border: 0;
+  }
+}
 .formContainer {
   display: flex;
   align-items: center;

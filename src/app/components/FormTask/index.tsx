@@ -8,11 +8,11 @@ import styles from './FormTask.module.scss'
 import React, { FormEvent, useState } from 'react'
 
 // Icons
-import { FiCalendar, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi'
+import { FiCalendar, FiEdit2, FiPlus, FiTrash, FiX } from 'react-icons/fi'
 
 // Firebase
 import { db, app } from '@/app/services/firebaseConnection';
-import { collection, addDoc, deleteDoc, doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 // Date Fns
 import { format } from 'date-fns';
@@ -41,12 +41,31 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
 
   const [input, setInput] = useState('')
   const [taskList, setTaskList] = useState<TaskList[]>(JSON.parse(tasks))
+  const [taskEdit, setTaskEdit] = useState<TaskList | null>(null)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     
     if(!input) {
       console.log('nao')
+      return
+    }
+
+    if(taskEdit) {
+      const docRef = await doc(db, 'tarefas', taskEdit.id)
+    
+      await updateDoc(docRef, {
+        tarefa: input
+      })
+      .then(() => {
+        let data = taskList;
+        let taskIndex = data.findIndex(el => el.id == taskEdit.id)
+        taskList[taskIndex].tarefa = input
+
+        setTaskList(data)
+        setInput('')
+        setTaskEdit(null)
+      })
       return
     }
     
@@ -77,13 +96,35 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
   }
 
   const handleDelete = async (id: string) => {
-    setTaskList([...taskList.filter(el => el.id != id)])
-
     await deleteDoc(doc(db, 'tarefas', id))
+    .then(() => {
+      setTaskList([...taskList.filter(el => el.id != id)])
+    }).catch(err => {
+      console.log('DEU ERRO', err)
+    })
+  }
+
+  const handleUpdate = async (task: TaskList) => {
+    setTaskEdit(task)
+    setInput(task.tarefa)
+  }
+
+  const handleCancel = () => {
+    console.log('gh')
+    setInput('')
+    setTaskEdit(null)
   }
 
   return (
     <main className={styles.container}>
+      {taskEdit && (
+        <span className={styles.warnText}>
+          <button onClick={handleCancel}>
+            <FiX size={30} color='#FF3636'/>
+          </button>
+          Você está editando '{taskEdit.tarefa}'
+        </span>
+      )}
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <input 
           type="text" 
@@ -108,7 +149,7 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
                   <FiCalendar size={20} color="#FFB800"/>
                   <time>{task.createdFormated}</time>
                 </div>
-                <button>
+                <button onClick={() => handleUpdate(task)}>
                   <FiEdit2 size={20} color="#FFF"/>
                   <span>Editar</span> 
                 </button>
