@@ -17,6 +17,10 @@ import { db } from "@/app/services/firebaseConnection"
 
 // Date-Fns
 import { format } from "date-fns"
+
+// Icons
+import { FiCalendar } from 'react-icons/fi'
+
 type Props = {
   params: { id: string }
 }
@@ -61,9 +65,15 @@ export default async function Task({ params }: Props) {
   }).catch((err) => console.log('DEU ERRO', err))
 
   return (
-    <div>
-      <h1>Página de detalhes</h1>
-      <h1>{task.tarefa}</h1>
-    </div>
+    <article className={styles.task_container}>
+      <div className={styles.task_actions}>
+        <div>
+          <FiCalendar size={30} color='#F2F6FC'/>
+          <span>Tarefa criada em: </span>
+          <time>{task.createdFormated}</time>
+        </div>
+      </div>
+      <p>{task.tarefa}</p>
+    </article>
   )
 }

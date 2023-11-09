@@ -11,63 +11,6 @@
   }
 }
 
-.taskList {
-  background-color: #20212C;
-  margin: 1rem 0;
-  padding: .7rem;
-  border-radius: 6px;
-
-  p {
-    cursor: pointer;
-    color: #F2F6FC;
-    font-size: 1rem;
-    line-height: 150%;
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    time {
-      color: #FFB800;
-      margin-left: 5px;
-      margin-right: 1rem;
-    }
-  }
-
-  button {
-    border: 0;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  & + button {
-    margin-left: 10px;
-  }
-
-  span {
-    margin-left: 5px;
-    color: #FFF;
-    cursor: pointer;
-    transition: .3s;
-  }
-
-  span:hover {
-    filter: brightness(0.8);
-  }
-}
-
 .vipContainer {
   max-width: 1120px;
   margin: 1rem auto;
