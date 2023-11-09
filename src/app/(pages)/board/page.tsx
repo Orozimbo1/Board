@@ -12,7 +12,7 @@ import { SupportButton } from '@/app/components/SupportButton'
 import { FormTask } from '@/app/components/FormTask'
 
 // Next
-// import { Metadata } from 'next'
+import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 // Next Auth
@@ -26,7 +26,7 @@ import { db } from '@/app/services/firebaseConnection'
 // Date fns
 import { format } from 'date-fns'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Board | Minhas tarefas',
   description: 'Crie suas tarefas.',
 }
