@@ -2,16 +2,37 @@
 // Next Auth
 import { SessionProvider } from "next-auth/react"
 
+// Context
+import { createContext, useContext, useState } from "react"
+
 // PayPal
 import { PayPalScriptProvider } from "@paypal/react-paypal-js"
 
 const initialOptions = {
-  'clientId': 'Ab3u3piBFYW6xf7WR3s8m-C_KVItj4fybUMKMFmxt6W9wz8bhOdOyxI1dMINKm-L-TuOEAhoI6kgKcS3',
+  'clientId': 'AUKfKiuUkJ9XrmlG4GlBv_LM0GC6QLdjNQsJLyfYLZDbgIGTWFnHgOu4qUgpNbl-1oukOn0FqKeLfqnf',
   currency: 'BRL',
   intent: 'capture'
 }
 
-export default function Provider ({
+const DonateContext = createContext({})
+
+export const DonateContextProvider = ({
+  children
+}: {
+  children: React.ReactNode
+}) => {
+    const [donate, setDonate] = useState(false);
+
+    return (
+        <DonateContext.Provider value={{ donate, setDonate }}>
+            {children}
+        </DonateContext.Provider>
+    )
+};
+
+export const useDonateContext = () => useContext(DonateContext);
+
+export function Provider ({
   children,
   session
 }: {
@@ -20,7 +41,7 @@ export default function Provider ({
 }): React.ReactNode {
   return <SessionProvider session={session}>
     <PayPalScriptProvider options={initialOptions}>
-      {children}
+      { children }
     </PayPalScriptProvider>
   </SessionProvider>
 }

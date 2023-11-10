@@ -14,7 +14,7 @@ import { Inter } from 'next/font/google'
 import { Header } from './components/Header'
 
 // Context
-import Provider from './context/client-provider'
+import { Provider, DonateContextProvider } from './context/client-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,8 +29,10 @@ export default async function RootLayout ({
     <html lang="pt-br">
       <body className={inter.className}>
         <Provider session={session}>
-          <Header />
-          {children}
+          <DonateContextProvider>
+            <Header />
+            {children}
+          </DonateContextProvider>
         </Provider>
       </body>
     </html>
