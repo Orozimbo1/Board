@@ -22,12 +22,13 @@ export const Donate = async () => {
   }
 
   const user = {
-    nome: session?.user.name,
+    name: session?.user.name,
     id: session?.id,
     image: session?.user.image
   }
-
-  // console.log(user)
+  // Ab3u3piBFYW6xf7WR3s8m-C_KVItj4fybUMKMFmxt6W9wz8bhOdOyxI1dMINKm-L-TuOEAhoI6kgKcS3
+  // <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
+  // <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
 
   return (
     <main className={styles.donate_container}>
@@ -35,7 +36,7 @@ export const Donate = async () => {
       
       <div className={styles.vip}>
         <img src={user.image} alt={`Foto de perfil do apoiador ${user.name}`} />
-        <span>Parabéns {user.nome}, você agora é um apoiador!</span>
+        <span>Parabéns {user.name}, você agora é um apoiador!</span>
       </div>
 
       <h1>Seja um apoiador deste projeto 🏆</h1>
