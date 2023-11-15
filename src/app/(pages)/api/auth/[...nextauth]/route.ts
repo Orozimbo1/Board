@@ -3,7 +3,6 @@
 
 // Firebase
 import { db } from "@/app/services/firebaseConnection"
-import { profile } from "console"
 import { doc, getDoc } from "firebase/firestore"
 
 // Next Auth
