@@ -62,7 +62,13 @@ export default async function Task({ params }: Props) {
     }
 
     return data
-  }).catch((err) => console.log('DEU ERRO', err))
+  }).catch(() => {
+    return {}
+  })
+
+  if(Object.keys(task).length === 0) {
+    redirect('/board')
+  }
 
   return (
     <article className={styles.task_container}>
