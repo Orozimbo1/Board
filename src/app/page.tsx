@@ -6,10 +6,14 @@ import styles from './styles/page.module.scss'
 
 // Next
 import { Metadata } from 'next'
+import Image from 'next/image';
 
 // Firebase
 import { db } from './services/firebaseConnection';
 import { collection, getDocs } from 'firebase/firestore';
+
+// Images
+import boardUser from '../../public/images/board-user.svg'
 
 export const metadata: Metadata = {
   title: 'Board | Organizando tarefas',
@@ -27,7 +31,7 @@ export default async function Home() {
   });
   return (
     <main className={styles.contentContainer}>
-      <img src="images/board-user.svg" alt="Ferramenta Board" className={styles.banner} />
+      <Image src={boardUser} alt="Ferramenta Board" className={styles.banner} />
       <section className={styles.callToAction}>
         <h1>Uma ferramenta para o seu dia a dia. Escreva, planeje e organize...</h1>
         <p>

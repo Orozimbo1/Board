@@ -1,18 +1,22 @@
 // Styles
 import styles from './styles.module.scss'
 
-// Router
+// Next
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Components
 import { SignInButton } from '../SignInButton'
+
+// Images
+import logo from '../../../../public/images/logo.svg'
 
 export const Header = () => {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
         <Link href="/">
-          <img src="/images/logo.svg" alt="Logo meu board" />
+          <Image src={logo} alt="Logo meu board"/>
         </Link>
         <nav>
           <Link href="/">
