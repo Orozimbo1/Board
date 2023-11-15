@@ -1,15 +1,9 @@
 /* eslint-disable */
 // @ts-nocheck
-
-// Styles
-import styles from './styles.module.scss'
-
-// Icons
-import { FiClock } from 'react-icons/fi'
-
 // Components
 import { SupportButton } from '@/app/components/SupportButton'
 import { FormTask } from '@/app/components/FormTask'
+import { VipContainer } from '@/app/components/VipContainer'
 
 // Next
 import { Metadata } from 'next'
@@ -24,9 +18,7 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { db } from '@/app/services/firebaseConnection'
 
 // Date fns
-import { format, formatDistance } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
-import { VipContainer } from '@/app/components/VipContainer'
+import { format } from 'date-fns'
 
 export const metadata: Metadata = {
   title: 'Board | Minhas tarefas',
@@ -68,7 +60,6 @@ const Board = async () => {
       {user.vip && (
         <VipContainer lastDonate={user.lastDonate} />
       )}
-
       <SupportButton />
     </>
   )
