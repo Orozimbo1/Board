@@ -44,7 +44,7 @@ export const Donate = async () => {
       <h1>Seja um apoiador deste projeto 🏆</h1>
       <h3>Contribua com apenas <span>R$ 1,00</span></h3>
       <strong>Apareça na nossa Home, tenha funcionalidades exclusivas.</strong>
-      <ButtonPayPal imageUrl={user.image} />
+      <ButtonPayPal imageUrl={user.image} id={user.id} />
     </main>
   )
 }

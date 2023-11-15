@@ -32,7 +32,9 @@ type TaskList = {
 interface BoardProps{
   user: {
     id: string,
-    nome: string
+    nome: string,
+    vip: Boolean,
+    lastDonate: string | Date
   },
   tasks: string
 }
@@ -140,7 +142,7 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
       <section>
         {taskList.map((task) => (
           <article className={styles.taskList} key={task.id}>
-            <Link href={`/board/${task.id}`}>
+            <Link href={user.vip ? `/board/${task.id}` : '/board'}>
               <p>{task.tarefa}</p>
             </Link>
             <div className={styles.actions}>
@@ -149,10 +151,12 @@ export const FormTask = ({ user, tasks }: BoardProps) => {
                   <FiCalendar size={20} color="#FFB800"/>
                   <time>{task.createdFormated}</time>
                 </div>
-                <button onClick={() => handleUpdate(task)}>
-                  <FiEdit2 size={20} color="#FFF"/>
-                  <span>Editar</span> 
-                </button>
+                {user.vip && (
+                  <button onClick={() => handleUpdate(task)}>
+                    <FiEdit2 size={20} color="#FFF"/>
+                    <span>Editar</span> 
+                  </button>
+                )}
               </div>
                 <button onClick={() => handleDelete(task.id)}>
                   <FiTrash size={20} color="#FF3636" />

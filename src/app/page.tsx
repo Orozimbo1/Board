@@ -1,7 +1,15 @@
+/* eslint-disable */
+// @ts-nocheck
+
 // Styles
 import styles from './styles/page.module.scss'
 
+// Next
 import { Metadata } from 'next'
+
+// Firebase
+import { db } from './services/firebaseConnection';
+import { collection, getDocs } from 'firebase/firestore';
 
 export const metadata: Metadata = {
   title: 'Board | Organizando tarefas',
@@ -9,7 +17,14 @@ export const metadata: Metadata = {
 }
 
 
-export default function Home() {
+export default async function Home() {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  const donaters = querySnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data()
+    }
+  });
   return (
     <main className={styles.contentContainer}>
       <img src="images/board-user.svg" alt="Ferramenta Board" className={styles.banner} />
@@ -22,14 +37,10 @@ export default function Home() {
       </section>
 
       <div className={styles.donaters}>
-        <h3>Apoiadores:</h3>
-        <img src="images/Perfil.jpg" alt="Usuário 1" />
-        <img src="images/Perfil.jpg" alt="Usuário 2" />
-        <img src="images/Perfil.jpg" alt="Usuário 3" />
-        <img src="images/Perfil.jpg" alt="Usuário 4" />
-        <img src="images/Perfil.jpg" alt="Usuário 5" />
-        <img src="images/Perfil.jpg" alt="Usuário 6" />
-        <img src="images/Perfil.jpg" alt="Usuário 7" />
+        {donaters.length !== 0 && <h3>Apoiadores:</h3>}
+        {donaters && donaters.map((donater) => (
+          <img src={donater.image} alt="Doador" key={donater.id}/>
+        ))}
       </div>
     </main>
   )

@@ -1,6 +1,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
+// Firebase
+import { db } from "@/app/services/firebaseConnection"
+import { profile } from "console"
+import { doc, getDoc } from "firebase/firestore"
+
+// Next Auth
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 
@@ -26,14 +32,27 @@ export const authOptions = {
     },
     async session({ session, token }) {
       try {
+        const docRef = doc(db, 'users', token.sub)
+        const lastDonate = await getDoc(docRef).then((snapshot) => {
+          if(snapshot.exists) {
+            return snapshot.data().lastDonate.toDate()
+          } else {
+            return null
+          }
+        })
+
         return {
           ...session,
-          id: token.sub 
+          id: token.sub ,
+          vip: lastDonate ? true : false,
+          lastDonate: lastDonate
         }
       } catch (error) {
         return {
           ...session,
-          id: null
+          id: null,
+          vip: false,
+          lastDonate: null
         }
       }
     }

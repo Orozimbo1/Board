@@ -24,7 +24,9 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { db } from '@/app/services/firebaseConnection'
 
 // Date fns
-import { format } from 'date-fns'
+import { format, formatDistance } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { VipContainer } from '@/app/components/VipContainer'
 
 export const metadata: Metadata = {
   title: 'Board | Minhas tarefas',
@@ -40,7 +42,9 @@ const Board = async () => {
 
   const user = {
     nome: session?.user.name,
-    id: session?.id
+    id: session?.id,
+    vip: session?.vip,
+    lastDonate: session?.lastDonate
   }
 
   const tasksRef = collection(db, 'tarefas')
@@ -61,15 +65,9 @@ const Board = async () => {
   return (
     <>
       <FormTask user={user} tasks={tasks} />
-      <div className={styles.vipContainer}>
-        <h3>Obrigado por apoiar esse projeto.</h3>
-        <div>
-          <FiClock size={28} color="#FFF"/>
-          <time>
-            Última doação foi a 3 dias.
-          </time>
-        </div>
-      </div>
+      {user.vip && (
+        <VipContainer lastDonate={user.lastDonate} />
+      )}
 
       <SupportButton />
     </>
