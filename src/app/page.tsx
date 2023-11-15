@@ -5,7 +5,6 @@
 import styles from './styles/page.module.scss'
 
 // Next
-import { Metadata } from 'next'
 import Image from 'next/image';
 
 // Firebase
@@ -14,12 +13,6 @@ import { collection, getDocs } from 'firebase/firestore';
 
 // Images
 import boardUser from '../../public/images/board-user.svg'
-
-export const metadata: Metadata = {
-  title: 'Board | Organizando tarefas',
-  description: 'Gerenciador de tarefas',
-}
-
 
 export default async function Home() {
   const querySnapshot = await getDocs(collection(db, "users"));

@@ -16,7 +16,18 @@ import { Header } from './components/Header'
 // Context
 import { Provider, DonateContextProvider } from './context/client-provider'
 
+// Next
+import { Metadata } from 'next'
+
 const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'Board | Organizando tarefas',
+  description: 'Gerenciador de tarefas',
+  icons: {
+    icon: ['/images/favicon.ico']
+  }
+}
 
 export default async function RootLayout ({
   children
