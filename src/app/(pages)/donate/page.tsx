@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description: 'Página de apoiadores.'
 }
 
-export const Donate = async () => {
+const Donate = async () => {
   const session = await getServerSession(authOptions)
 
   if(!session?.id) {
